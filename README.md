@@ -14,7 +14,7 @@ src/main/java/com/codebyjoey/f5hell/
 ├── 🎮 controller/   # [C] 사용자 요청(URL) 처리 및 Thymeleaf 뷰 연결
 ├── ⚙️ service/      # [Business Logic] 대기열 순번 계산, 티켓팅 검증 등 핵심 로직
 ├── 🗄️ repository/   # [DB/Redis Access] RedisTemplate을 이용한 데이터 저장 및 조회
-├── 📦 model/        # [M] 데이터 구조 및 객체 정의
+├── 📦 domain/        # [M] 데이터 구조 및 객체 정의
 │   ├── entity/      # 데이터베이스 테이블과 매핑되는 객체
 │   └── dto/         # 계층 간 데이터 전달용 객체 (Request/Response)
 ├── 🛠️ config/       # Redis, Security 등 시스템 환경 설정
