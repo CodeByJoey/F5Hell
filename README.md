@@ -1,5 +1,6 @@
-# F5H
+# F5Hell
 더 이상의 F5 지옥은 없다. 한정판 굿즈를 위한 완벽한 실시간 예매 솔루션
+
 
 ## 🛠 Tech Stack
 - Java 17
@@ -20,14 +21,11 @@ src/main/java/com/codebyjoey/f5hell/
 └── 🛠️ common/       # 공통 예외 처리(Exception Handler), 유틸리티 클래스
 ```
 
-### 🚀 다음 단계: `develop` 브랜치에 기록하기
-
-```bash
-# 1. README.md 수정 후 저장
-# 2. 스테이징 및 커밋 (develop 브랜치인지 꼭 확인하세요!)
-git add README.md
-git commit -m "docs: 프로젝트 디렉토리 구조 정의 및 README 업데이트"
-
-# 3. 원격에 푸시
-git push origin develop
+## 📃Git Strategy: Git Flow
+```text
+Main:       # 배포 가능한 상태의 안정적인 코드 관리 (v1.0.0 등 태깅)
+Develop:    # 기능 통합 및 차기 버전 개발 베이스
+Feature:    # 단위 기능 구현 (feature/*)
+Release:    # 배포 전 최종 QA 및 버전 확정
+Hotfix:     # 운영 환경 긴급 버그 수정
 ```
