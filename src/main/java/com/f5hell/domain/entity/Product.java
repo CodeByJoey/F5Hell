@@ -1,6 +1,7 @@
 package com.f5hell.domain.entity;
 
-import com.f5hell.common.exception.NotEnoughStockException;
+import com.f5hell.common.exception.BusinessException;
+import com.f5hell.common.message.ErrorCode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본생성자는 막되, JPA 프록시가 접근할 수 있게 PROTECTED
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class Product {
     private Integer stock;      // 재고
 
     @Builder(buildMethodName = "create")
-    public Product(String name, Long price, Integer stock) {
+    private Product(String name, Long price, Integer stock) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -36,7 +37,7 @@ public class Product {
      */
     public Integer addStock(int quantity) {
         if(quantity <= 0) {
-            throw new IllegalArgumentException("추가할 재고 수량은 0보다 커야합니다.");
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
         return this.stock += quantity;
     }
@@ -48,10 +49,10 @@ public class Product {
      */
     public Integer removeStock(int quantity) {
         if(quantity <= 0) {
-            throw new IllegalArgumentException("차감할 재고 수량은 0보다 커야합니다.");
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
         if(this.stock < quantity) {
-            throw new NotEnoughStockException("재고가 부족합니다. (현재 재고 : " + this.stock + ")");
+            throw new BusinessException(ErrorCode.NOT_ENOUGH_STOCK, this.stock);
         }
         return this.stock -= quantity;
     }
