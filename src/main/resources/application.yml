@@ -14,8 +14,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # ??? ?? ? ??? ?? ???? (?? ???)
+      ddl-auto: update # JPA 테이블 자동생성 (개발용)
     show-sql: true
     properties:
       hibernate:
-        format_sql: true # SQL ??? ??
+        format_sql: true # SQL 로그 포맷팅
