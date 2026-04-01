@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>상품 등록 - F5Hell</title>
+  <style>
+    .field-error { border-color: #dc3545; color: #dc3545; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>상품 등록</h2>
+  <form th:action="@{/products/create}" th:object="${productForm}" method="post">
+
+    <div>
+      <label th:for="name">상품명</label>
+      <input type="text" th:field="*{name}"
+             th:class="${#fields.hasErrors('name')} ? 'field-error' : ''">
+      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    </div>
+
+    <div>
+      <label th:for="price">가격</label>
+      <input type="number" th:field="*{price}"
+             th:class="${#fields.hasErrors('price')} ? 'field-error' : ''">
+      <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+    </div>
+
+    <div>
+      <label th:for="stock">재고</label>
+      <input type="number" th:field="*{stock}"
+             th:class="${#fields.hasErrors('stock')} ? 'field-error' : ''">
+      <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
+    </div>
+
+    <button type="submit">상품 등록</button>
+  </form>
+</div>
+
+</body>
+</html>

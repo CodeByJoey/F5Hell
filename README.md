@@ -29,3 +29,24 @@ Feature:    # 단위 기능 구현 (feature/*)
 Release:    # 배포 전 최종 QA 및 버전 확정
 Hotfix:     # 운영 환경 긴급 버그 수정
 ```
+
+##  🤝Naming Convention (Service Layer)
+
+프로젝트의 유지보수와 일관성을 위해 서비스 계층의 메서드 명칭을 아래와 같이 표준화하여 사용합니다.
+
+| 행위 | 메서드 명칭 | 설명                            |
+| :--- | :--- |:------------------------------|
+| **등록** | `create` | 새로운 리소스를 생성하고 영속화합니다.         |
+| **수정** | `update` | 기존 리소스의 정보를 변경합니다.            |
+| **삭제** | `delete` | 리소스를 시스템에서 제거합니다.             |
+| **단건 조회** | `get` | 식별자(ID)를 통해 특정 리소스를 상세 조회합니다. |
+| **목록 조회** | `getList` | 조건에 맞는 리소스 목록을 반환합니다.         |
+
+### 🔗 URL Mapping (Controller)
+
+화면(Thymeleaf) 중심의 설계를 따르며, 행위를 명시적으로 URL에 포함합니다.
+
+- **조회:** `/domain`, `/domain/get/{id}`
+- **등록:** `/domain/create` (GET/POST)
+- **수정:** `/domain/update/{id}` (GET/POST)
+- **삭제:** `/domain/delete/{id}` (POST)
