@@ -61,3 +61,15 @@ Hotfix:     # 운영 환경 긴급 버그 수정
 | **형식 검증**<br>(Presentation) | **Controller / DTO** | 데이터 형식, 필수 값 누락, 단순 범위(음수 등) 체크       | `Bean Validation`<br>(@Valid, @Min, @NotBlank 등)     |
 | **비즈니스 검증**<br>(Domain) | **Service / Entity** | 시스템 상태에 따른 로직 검증 (중복 체크, 재고 확인, 권한 등) | `Custom Exception`<br>(Business Exception)           |
 | **데이터 무결성**<br>(Persistence) | **Database** | 최종적인 데이터 정합성 보장                       | `DB Constraint`<br>(Unique, Foreign Key, Not Null 등) |
+
+## 📊 로그 운영 및 레벨 관리 전략 (Logging Strategy)
+
+프로젝트의 안정적인 운영과 빠른 트러블슈팅을 위해 다음과 같은 로그 레벨 관리 기준을 준수합니다. 모든 로그에는 `MDC`를 통해 발급된 고유한 `traceId`가 포함됩니다.
+
+| 레벨 (Level) | 관리 기준 및 출력 시점 | 비즈니스 예시 (F5Hell) |
+| :--- | :--- | :--- |
+| **FATAL/ERROR** | 시스템 운영이 중단되거나 즉시 조치가 필요한 장애 | DB 연결 실패, 외부 API 연동 불가능, 심각한 시스템 오류 |
+| **WARN** | 당장 장애는 아니지만, 잠재적 위험이 있는 상태 | 10,000건 데이터 처리 중 일부 누락, 권한 없는 사용자의 접근 시도 |
+| **INFO** | **(운영 기본)** 주요 비즈니스 흐름 및 상태 변화 | 애플리케이션 기동/종료, 사용자 로그인, 대량 데이터 처리 시작/완료 |
+| **DEBUG** | **(개발 기본)** 개발 단계에서 흐름 추적 및 파라미터 확인 | SQL 실행 쿼리 및 파라미터 바인딩, API 요청/응답 전문(Payload) |
+| **TRACE** | 가장 상세한 정보 (라이브러리 내부 동작 등) | 프로젝트 내에서는 가급적 지양 (로그 폭집 방지) |
