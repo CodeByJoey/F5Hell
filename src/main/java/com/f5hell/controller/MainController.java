@@ -10,13 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
     @GetMapping
     public String home(Model model) {
-
         return "index";
-    }
-
-    @GetMapping("/css/test")
-    @ResponseBody
-    public String test() {
-        return "test";
     }
 }
