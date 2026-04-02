@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
@@ -20,21 +22,30 @@ class ProductControllerTest {
 
     @Test
     @DisplayName("[성공]: 상품 등록 폼 조회")
-    void success() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/create"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("product/createForm"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("productForm"));
+    void create_form_success() throws Exception {
+        mockMvc.perform(get("/products/create"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("product/createForm"))
+                .andExpect(model().attributeExists("productForm"));
     }
 
     @Test
-    @DisplayName("[예외]: 가격 음수 수량 입력 저장")
-    void fail_negative() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/products/create")
+    @DisplayName("[예외]: 상품 등록(가격 음수 수량 입력 저장)")
+    void create_fail_by_negative_price() throws Exception {
+        mockMvc.perform(post("/products/create")
                         .param("name", "불량상품")
-                        .param("price", "-100") // @Min(0) 위반
+                        .param("price", "-100")
                         .param("stock", "10"))
-                .andExpect(MockMvcResultMatchers.view().name("product/createForm")) // 다시 폼으로 이동
-                .andExpect(MockMvcResultMatchers.model().hasErrors()); // 에러가 있는지 확인
+                .andExpect(view().name("product/createForm"))
+                .andExpect(model().hasErrors());
+    }
+
+    @Test
+    @DisplayName("[성공]: 상품 목록 폼 조회")
+    void getList_success() throws Exception {
+        mockMvc.perform(get("products/getList"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("product/productList"))
+                .andExpect(model().attributeExists("products"));
     }
 }

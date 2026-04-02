@@ -1,8 +1,10 @@
 package com.f5hell.controller;
 
 import com.f5hell.domain.dto.ProductRequest;
+import com.f5hell.domain.entity.Product;
 import com.f5hell.service.ProductService;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -30,7 +34,14 @@ public class ProductController {
         if(result.hasErrors()) {
             return "product/createForm";
         }
-        productService.save(request);
+        productService.create(request);
         return "redirect:/products";
+    }
+
+    @GetMapping("/getList")
+    public String getList(Model model) {
+        List<Product> products = productService.getList();
+        model.addAttribute("products", products);
+        return "product/productList";
     }
 }

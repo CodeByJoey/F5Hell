@@ -50,3 +50,14 @@ Hotfix:     # 운영 환경 긴급 버그 수정
 - **등록:** `/domain/create` (GET/POST)
 - **수정:** `/domain/update/{id}` (GET/POST)
 - **삭제:** `/domain/delete/{id}` (POST)
+## ✅ 검증 전략 (Validation Strategy)
+
+본 프로젝트는 데이터의 무결성과 시스템의 안정성을 위해 검증 로직을 세 단계로 계층화하여 관리합니다. 이를 통해 각 레이어의 책임을 명확히 분리합니다.
+
+### 검증 계층 구조
+
+| 계층 (Layer) | 역할 (Responsibility) | 주요 검증 내용                              | 사용 기술/도구                                             |
+| :--- | :--- |:--------------------------------------|:-----------------------------------------------------|
+| **형식 검증**<br>(Presentation) | **Controller / DTO** | 데이터 형식, 필수 값 누락, 단순 범위(음수 등) 체크       | `Bean Validation`<br>(@Valid, @Min, @NotBlank 등)     |
+| **비즈니스 검증**<br>(Domain) | **Service / Entity** | 시스템 상태에 따른 로직 검증 (중복 체크, 재고 확인, 권한 등) | `Custom Exception`<br>(Business Exception)           |
+| **데이터 무결성**<br>(Persistence) | **Database** | 최종적인 데이터 정합성 보장                       | `DB Constraint`<br>(Unique, Foreign Key, Not Null 등) |
