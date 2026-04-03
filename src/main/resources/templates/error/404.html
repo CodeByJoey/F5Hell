@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>페이지를 찾을 수 없습니다 - F5Hell</title>
+    <style>
+        body { text-align: center; padding: 150px; font-family: 'Malgun Gothic', sans-serif; }
+        h1 { font-size: 50px; color: #e74c3c; }
+        p { font-size: 20px; color: #555; }
+        .home-btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<h1>404</h1>
+<h2>요청하신 페이지를 찾을 수 없습니다.</h2>
+<p>주소가 정확한지 다시 한번 확인해 주세요.</p>
+<a th:href="@{/}" class="home-btn">메인으로 돌아가기</a>
+</body>
+</html>
