@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>서버 오류 발생 - F5Hell</title>
+    <style>
+        body { text-align: center; padding: 150px; font-family: 'Malgun Gothic', sans-serif; background-color: #f8f9fa; }
+        h1 { font-size: 50px; color: #c0392b; }
+        .error-msg { margin: 20px auto; padding: 20px; max-width: 600px; background: white; border: 1px solid #ddd; border-radius: 8px; }
+        .home-btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #2c3e50; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<h1>500</h1>
+<h2>서버에 일시적인 문제가 발생했습니다.</h2>
+
+<div class="error-msg">
+    <p th:text="${errorMessage}">시스템 내부 오류가 발생하여 요청을 처리할 수 없습니다.</p>
+</div>
+
+<a th:href="@{/}" class="home-btn">홈으로 이동</a>
+</body>
+</html>
