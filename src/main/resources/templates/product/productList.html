@@ -11,6 +11,7 @@
 <ul>
     <li th:for="${products}">12331</li>
 </ul>
-<div></div>
+<div th:text="${products.content[0].name}"></div>
+
 </body>
 </html>

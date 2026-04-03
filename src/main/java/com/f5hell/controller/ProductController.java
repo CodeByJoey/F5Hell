@@ -6,6 +6,8 @@ import com.f5hell.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/products")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
     private final ProductService productService;
 
@@ -40,8 +43,10 @@ public class ProductController {
 
     @GetMapping("/getList")
     public String getList(Model model) {
-        List<Product> products = productService.getList();
-        model.addAttribute("products", products);
+        //List<Product> products = productService.getList();
+        Page<Product> listWithPaging = productService.getListWithPaging(1, 10);
+        log.info("listWithPaging: {}", listWithPaging);
+        model.addAttribute("products", listWithPaging);
         return "product/productList";
     }
 }
