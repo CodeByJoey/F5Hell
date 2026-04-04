@@ -8,10 +8,33 @@
     </style>
 </head>
 <body>
-<ul>
-    <li th:for="${products}">12331</li>
-</ul>
-<div th:text="${products.content[0].name}"></div>
+<table>
+    <form th:action="@{/products/getList}">
+        <tr>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>재고</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}">Onions</td>
+            <td th:text="${product.price}">2.41</td>
+            <td th:text="${product.stock}">2.41</td>
+        </tr>
+        <p th:text="${products.number}"></p>
+        <p th:text="${products.totalPages}"></p>
+        <button type="submit">이전</button>
+        <button type="submit">다음</button>
+        <ul class="pagination">
+            <li th:classappend="${!products.hasPrevious()} ? 'disabled'">
+                <a th:href="@{/products/getList(page=${products.number - 1})}">이전</a>
+            </li>
+
+            <li th:classappend="${!products.hasNext()} ? 'disabled'">
+                <a th:href="@{/products/getList(page=${products.number + 1})}">다음</a>
+            </li>
+        </ul>
+    </form>
+</table>
 
 </body>
 </html>
