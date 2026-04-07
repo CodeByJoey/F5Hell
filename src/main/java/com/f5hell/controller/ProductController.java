@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,9 +45,9 @@ public class ProductController {
     }
 
     @GetMapping("/getList")
-    public String getList(Model model, Pageable pageable) {
+    public String getList(Model model, @PageableDefault(page = 0, size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         //List<Product> products = productService.getList();
-        Page<Product> listWithPaging = productService.getListWithPaging(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Product> listWithPaging = productService.getListWithPaging(pageable);
         log.info("listWithPaging: {}", listWithPaging);
         model.addAttribute("products", listWithPaging);
         return "product/productList";

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +35,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Page<Product> getListWithPaging(int page, int size) {
-        return productRepository.findAll(PageRequest.of(page, size));
+    public Page<Product> getListWithPaging(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
 }
