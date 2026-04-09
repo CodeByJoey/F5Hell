@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<div class="row" th:fragment="pagination(page)">
+    <div class="d-flex justify-content-center">
+        <div th:if="${page.totalPages == 0}">
+            <p>검색 결과가 없습니다.</p>
+        </div>
+
+        <nav aria-label="페이지 네비게이션" th:if="${page.totalPages > 0}">
+            <ul class="pagination">
+                <th:block th:with="start=${(page.number / 5) * 5}, end=${(start + 4 < page.totalPages ? start + 4 : page.totalPages - 1)}, last=${end == page.totalPages}">
+                    <li class="page-item" th:classappend="${page.first}? 'disabled'">
+                        <a class="page-link"th:onclick="|movePage(0)|" aria-label="이전">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${page.first}? 'disabled'">
+                        <a class="page-link" th:onclick="|movePage(${page.number - 1})|">&lt;</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(start, (last ? page.totalPages - 1 : end))}">
+                        <a class="page-link" th:onclick="|movePage(${i})|" th:classappend="${page.number == i}? 'active'" th:text="${i+1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${page.last}? 'disabled'">
+                        <a class="page-link" th:onclick="|movePage(${page.number + 1})|">&gt;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${page.last}? 'disabled'">
+                        <a class="page-link"th:onclick="|movePage(${page.totalPages - 1})|" aria-label="다음">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+</div>
+</html>

@@ -14,10 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,9 +42,11 @@ public class ProductController {
     }
 
     @GetMapping("/getList")
-    public String getList(Model model, @PageableDefault(page = 0, size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String getList(Model model,
+                      @RequestParam(required = false, name = "name", defaultValue = "") String name,
+                      @PageableDefault(page = 0, size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         //List<Product> products = productService.getList();
-        Page<Product> listWithPaging = productService.getListWithPaging(pageable);
+        Page<Product> listWithPaging = productService.getListWithPagingByName(name, pageable);
         log.info("listWithPaging: {}", listWithPaging);
         model.addAttribute("products", listWithPaging);
         return "product/productList";

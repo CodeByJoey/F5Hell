@@ -39,4 +39,8 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
+    public Page<Product> getListWithPagingByName(String name, Pageable pageable) {
+        return productRepository.findProductsByName(name, pageable);
+    }
+
 }

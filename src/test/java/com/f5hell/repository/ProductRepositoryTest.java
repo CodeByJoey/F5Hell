@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
@@ -59,6 +61,38 @@ class ProductRepositoryTest {
         assertThat(products).extracting(p -> p.getName()).contains("나이키 트래비스 스캇");
         assertThat(products).extracting(Product::getPrice).contains(1000000L);
         assertThat(products).extracting(Product::getStock).contains(100);
+    }
+
+    @Test
+    @DisplayName("상품 목록 조회 조건 입력 테스트")
+    void findProductsByName() {
+        // given
+        Product product = Product.builder()
+                .name("나이키 신발")
+                .price(100000L)
+                .stock(40)
+                .create();
+
+        Product product2 = Product.builder()
+                .name("나이키 신발2")
+                .price(100000L)
+                .stock(30)
+                .create();
+
+        Product product3 = Product.builder()
+                .name("아디다스 신발")
+                .price(100000L)
+                .stock(40)
+                .create();
+
+        productRepository.save(product);
+        productRepository.save(product2);
+        productRepository.save(product3);
+        // when
+        Page<Product> products = productRepository.findProductsByName(null, null);
+
+        // then
+        assertThat(products).hasSize(3);
     }
 
 }
