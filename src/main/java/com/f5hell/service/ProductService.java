@@ -35,12 +35,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Page<Product> getListWithPaging(Pageable pageable) {
-        return productRepository.findAll(pageable);
-    }
-
-    public Page<Product> getListWithPagingByName(String name, Pageable pageable) {
-        return productRepository.findProductsByName(name, pageable);
+    public Page<Product> getListWithPaging(String name, Long categoryId, Pageable pageable) {
+        return productRepository.searchProducts(name, categoryId, pageable);
     }
 
 }
