@@ -1,5 +1,6 @@
 package com.f5hell.integration;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,17 @@ class ProductControllerIntegrationTest {
                 // then: 실제 서비스 -> 리포지토리 -> DB까지 다 거쳐서 성공해야 함
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection()) // 저장 후 리다이렉트 확인
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/products"));
+    }
+
+    @Test
+    @DisplayName("[성공]: 상품 단건 조회 통합테스트")
+    void getSuccess() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/products/get/{id}", 1L))
+                .andExpect(MockMvcResultMatchers.view().name("product/productDetail")) // 어떤 페이지로 가는지
+                .andExpect(MockMvcResultMatchers.model().attributeExists("product")) // 모델에 product가 있는지
+                .andExpect(MockMvcResultMatchers.model().attribute("product",
+                        Matchers.hasProperty("name",
+                                Matchers.is("F5 상품 1")))) // 특정 속성값 확인
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

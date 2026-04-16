@@ -4,7 +4,6 @@ import com.f5hell.domain.dto.ProductRequest;
 import com.f5hell.domain.entity.Product;
 import com.f5hell.service.ProductService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -38,7 +35,7 @@ public class ProductController {
             return "product/createForm";
         }
         productService.create(request);
-        return "redirect:/products";
+        return "redirect:/products/getList";
     }
 
     @GetMapping("/getList")
@@ -50,5 +47,12 @@ public class ProductController {
         log.info("listWithPaging: {}", listWithPaging);
         model.addAttribute("products", listWithPaging);
         return "product/productList";
+    }
+
+    @GetMapping("/get/{id}")
+    public String getList(@PathVariable Long id, Model model) {
+        Product product = productService.get(id);
+        model.addAttribute("product", product);
+        return "product/productDetail";
     }
 }

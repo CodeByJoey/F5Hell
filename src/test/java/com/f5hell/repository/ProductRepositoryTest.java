@@ -1,5 +1,6 @@
 package com.f5hell.repository;
 
+import com.f5hell.domain.dto.ProductRequest;
 import com.f5hell.domain.entity.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -89,10 +90,29 @@ class ProductRepositoryTest {
         productRepository.save(product2);
         productRepository.save(product3);
         // when
-        Page<Product> products = productRepository.findProductsByName(null, null);
+        Page<Product> products = productRepository.searchProducts(null, null, null);
 
         // then
         assertThat(products).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("상품 단건 조회")
+    void findProductById() {
+        Product product = Product.builder()
+                .name("아디다스")
+                .price(25000L)
+                .stock(1)
+                .create();
+
+        Product savedProduct = productRepository.save(product);
+        Long id = savedProduct.getId();
+
+        // when
+        Product result = productRepository.findById(id+1).orElse(null);
+
+        // then
+        assertThat(result).isNotEqualTo(savedProduct);
     }
 
 }

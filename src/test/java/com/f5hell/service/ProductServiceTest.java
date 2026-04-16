@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -74,6 +75,20 @@ class ProductServiceTest {
         List<Product> result = productService.getList();
         assertThat(result).hasSize(2);
         assertThat(result).extracting(Product::getName).contains("상품1", "상품2");
+    }
+
+    @Test
+    @DisplayName("상품 단건 조회")
+    void getByIdTest() {
+        Product mockProduct = Product.builder()
+                .name("상품1")
+                .price(25000L)
+                .stock(1)
+                .create();
+
+        BDDMockito.given(productRepository.findById(1L)).willReturn(Optional.ofNullable(mockProduct));
+        Product result = productService.get(1L);
+        assertThat(result).isEqualTo(mockProduct);
     }
 
 }

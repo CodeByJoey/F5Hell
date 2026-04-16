@@ -1,42 +1,56 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-  <meta charset="utf-8">
-  <title>상품 등록 - F5Hell</title>
-  <style>
-    .field-error { border-color: #dc3545; color: #dc3545; }
-  </style>
+    <meta charset="utf-8">
+    <title>상품 등록 - F5Hell</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <script th:src="@{/js/common.js}"></script>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>상품 등록</h2>
-  <form th:action="@{/products/create}" th:object="${productForm}" method="post">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center py-5">
+                <h4 th:text="#{product.create.title}">상품 등록</h4>
+            </div>
+        </div>
 
-    <div>
-      <label th:for="name">상품명</label>
-      <input type="text" th:field="*{name}"
-             th:class="${#fields.hasErrors('name')} ? 'field-error' : ''">
-      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        <div class="row">
+            <div class="col">
+                <form th:action="@{/products/create}" th:object="${productForm}" method="post">
+                        <label class="col-form-label" th:for="name" th:text="#{product.name}">상품명</label>
+                        <input type="text" class="form-control" th:field="*{name}"
+                               th:classappend="${#fields.hasErrors('name')} ? 'field-error' : ''">
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
+                    <div>
+                        <label th:for="price" th:text="#{product.price}">가격</label>
+                        <input type="number" class="form-control" th:field="*{price}"
+                               th:classappend="${#fields.hasErrors('price')} ? 'field-error' : ''">
+                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                    </div>
+
+                    <div>
+                        <label th:for="stock" th:text="#{product.stock}">재고</label>
+                        <input type="number" class="form-control" th:field="*{stock}"
+                               th:classappend="${#fields.hasErrors('stock')} ? 'field-error' : ''">
+                        <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" th:text="#{product.create.button}">상품 등록</button>
+                    <a class="btn btn-light" th:href="@{/products/getList}" th:text="#{product.list.button}">목록</a>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div>
-      <label th:for="price">가격</label>
-      <input type="number" th:field="*{price}"
-             th:class="${#fields.hasErrors('price')} ? 'field-error' : ''">
-      <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
-    </div>
-
-    <div>
-      <label th:for="stock">재고</label>
-      <input type="number" th:field="*{stock}"
-             ${}ASDFSADF
-             th:class="${#fields.hasErrors('stock')} ? 'field-error' : ''">
-      <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
-    </div>
-
-    <button type="submit">상품 등록</button>
-  </form>
 </div>
 
 </body>

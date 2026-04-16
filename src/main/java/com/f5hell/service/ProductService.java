@@ -43,4 +43,8 @@ public class ProductService {
         return productRepository.findProductsByName(name, pageable);
     }
 
+    public Product get(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
 }
