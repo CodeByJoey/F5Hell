@@ -47,4 +47,10 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+    @Transactional
+    public Long update(Long id, ProductRequest request) {
+        Product findProduct = productRepository.findById(id).orElse(null);
+        return findProduct.update(request);
+    }
+
 }

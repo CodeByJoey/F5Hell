@@ -50,9 +50,27 @@ public class ProductController {
     }
 
     @GetMapping("/get/{id}")
-    public String getList(@PathVariable Long id, Model model) {
+    public String getList(@PathVariable("id") Long id, Model model) {
         Product product = productService.get(id);
         model.addAttribute("product", product);
         return "product/productDetail";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable("id") Long id, Model model) {
+        Product product = productService.get(id);
+        model.addAttribute("productForm", product);
+        return "product/updateForm";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Long id,
+                         @Valid @ModelAttribute("productForm") ProductRequest request,
+                         BindingResult result) {
+        if(result.hasErrors()) {
+            return "product/updateForm";
+        }
+        Long savedId = productService.update(id, request);
+        return "redirect:/products/get/" + savedId;
     }
 }

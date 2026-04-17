@@ -22,13 +22,13 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-center py-5">
-                <h4 th:text="#{product.create.title}">상품 등록</h4>
+                <h4 th:text="#{product.update.title}">상품 등록</h4>
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <form th:action="@{/products/create}" th:object="${productForm}" method="post">
+                <form th:action="@{/products/update/{id}(id=${productForm.id})}" th:object="${productForm}" method="post">
                     <div>
                         <label class="col-form-label" th:for="name" th:text="#{product.name}">상품명</label>
                         <input type="text" class="form-control" th:field="*{name}"
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="d-flex gap-2 justify-content-end py-3">
-                        <button type="submit" class="btn btn-primary" th:text="#{product.create.button}">상품 등록</button>
+                        <button type="submit" class="btn btn-primary" th:text="#{product.update.button}">상품 수정</button>
                         <a class="btn btn-light" th:href="@{/products/getList}" th:text="#{product.list.button}">목록</a>
                     </div>
                 </form>

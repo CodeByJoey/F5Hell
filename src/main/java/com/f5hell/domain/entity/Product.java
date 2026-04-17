@@ -2,6 +2,7 @@ package com.f5hell.domain.entity;
 
 import com.f5hell.common.exception.BusinessException;
 import com.f5hell.common.message.ErrorCode;
+import com.f5hell.domain.dto.ProductRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -55,5 +56,12 @@ public class Product {
             throw new BusinessException(ErrorCode.NOT_ENOUGH_STOCK, this.stock);
         }
         return this.stock -= quantity;
+    }
+
+    public Long update(ProductRequest request) {
+        this.name = request.getName();
+        this.price = request.getPrice();
+        this.stock = request.getStock();
+        return this.id;
     }
 }
