@@ -115,4 +115,18 @@ class ProductRepositoryTest {
         assertThat(result).isNotEqualTo(savedProduct);
     }
 
+    @Test
+    @DisplayName("상품 단건 삭제")
+    void deleteProductById() {
+        Product product = Product.builder()
+                .name("삭제예정 상품")
+                .price(10000L)
+                .stock(1)
+                .create();
+
+        Product savedProduct = productRepository.save(product);
+        productRepository.delete(savedProduct);
+        Product result = productRepository.findById(savedProduct.getId()).orElse(null);
+        assertThat(result).isNull();
+    }
 }

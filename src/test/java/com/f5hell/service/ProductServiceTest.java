@@ -91,4 +91,20 @@ class ProductServiceTest {
         assertThat(result).isEqualTo(mockProduct);
     }
 
+    @Test
+    @DisplayName("상품 단건 삭제")
+    void deleteByIdTest() {
+
+        Product mockProduct = Product.builder()
+                .name("상품1")
+                .price(10000L)
+                .stock(1)
+                .create();
+
+        productService.delete(mockProduct.getId());
+        BDDMockito.given(productRepository.findById(mockProduct.getId())).willReturn(null);
+        Product result = productService.get(mockProduct.getId());
+        assertThat(result).isNull();
+    }
+
 }

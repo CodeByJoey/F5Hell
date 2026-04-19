@@ -74,4 +74,11 @@ public class ProductController {
         Long savedId = productService.update(id, request);
         return "redirect:/products/get/" + savedId;
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        productService.delete(id);
+        return "redirect:/products/getList";
+    }
+
 }

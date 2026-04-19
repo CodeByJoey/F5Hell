@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<div class="row" th:fragment="pagination(page)">
+<div class="row my-3" th:fragment="pagination(page)">
     <div class="d-flex justify-content-center">
         <div th:if="${page.totalPages == 0}">
-            <p>검색 결과가 없습니다.</p>
+            <span th:text="#{search.no-results}">검색 결과가 없습니다.</span>
         </div>
 
         <nav aria-label="페이지 네비게이션" th:if="${page.totalPages > 0}">
