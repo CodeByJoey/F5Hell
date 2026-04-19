@@ -41,9 +41,10 @@ public class ProductController {
     @GetMapping("/getList")
     public String getList(Model model,
                       @RequestParam(required = false, name = "name", defaultValue = "") String name,
+                      @RequestParam(required = false, name = "categoryId") Long categoryId,
                       @PageableDefault(page = 0, size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         //List<Product> products = productService.getList();
-        Page<Product> listWithPaging = productService.getListWithPagingByName(name, pageable);
+        Page<Product> listWithPaging = productService.getListWithPaging(name, categoryId, pageable);
         log.info("listWithPaging: {}", listWithPaging);
         model.addAttribute("products", listWithPaging);
         return "product/productList";

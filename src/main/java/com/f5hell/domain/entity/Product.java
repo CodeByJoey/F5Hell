@@ -23,12 +23,14 @@ public class Product {
     private String name;        // 상품 이름
     private Long price;         // 상품 가격
     private Integer stock;      // 재고
+    private Long categoryId; // 카테고리 아이디
 
     @Builder(buildMethodName = "create")
-    private Product(String name, Long price, Integer stock) {
+    private Product(String name, Long price, Integer stock, Long categoryId) {
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.categoryId = categoryId;
     }
 
     /**
