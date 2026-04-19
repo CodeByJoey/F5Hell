@@ -89,7 +89,7 @@ class ProductRepositoryTest {
         productRepository.save(product2);
         productRepository.save(product3);
         // when
-        Page<Product> products = productRepository.findProductsByName(null, null);
+        Page<Product> products = productRepository.searchProducts(null, null, null);
 
         // then
         assertThat(products).hasSize(3);

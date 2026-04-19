@@ -26,9 +26,17 @@
 
     <div class="row">
         <form id="searchForm" th:action="@{/products/getList}">
-            <div class="input-group mt-3">
-                <input type="text" class="form-control" name="name" th:value="${param.name}" placeholder="상품명을 입력하세요" aria-label="검색창">
-                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            <div class="d-flex mt-3 align-items-stretch">
+                <select class="form-select w-25" name="categoryId" aria-label="카테고리 검색">
+                    <option value="" th:selected="${param.categoryId == null}">전체 카테고리</option>
+                    <option value="1" th:selected="${#strings.equals(param.categoryId, '1')}">의류</option>
+                    <option value="2" th:selected="${#strings.equals(param.categoryId, '2')}">신발</option>
+                    <option value="3" th:selected="${#strings.equals(param.categoryId, '3')}">가방</option>
+                </select>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="name" th:value="${param.name}" placeholder="상품명을 입력하세요" aria-label="검색창">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
             </div>
             <input type="hidden" name="page">
         </form>
