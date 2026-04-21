@@ -19,4 +19,5 @@ public class ProductRequest {
     @NotNull
     @Min(value = 1)
     private Integer stock;
+    private Long categoryId;
 }

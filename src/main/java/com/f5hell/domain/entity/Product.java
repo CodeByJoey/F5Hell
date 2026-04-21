@@ -3,10 +3,7 @@ package com.f5hell.domain.entity;
 import com.f5hell.common.exception.BusinessException;
 import com.f5hell.common.message.ErrorCode;
 import com.f5hell.domain.dto.ProductRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,14 +20,18 @@ public class Product {
     private String name;        // 상품 이름
     private Long price;         // 상품 가격
     private Integer stock;      // 재고
-    private Long categoryId; // 카테고리 아이디
+    //private Long categoryId;    // 카테고리 아이디
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;  // 카테고리
 
     @Builder(buildMethodName = "create")
-    private Product(String name, Long price, Integer stock, Long categoryId) {
+    private Product(String name, Long price, Integer stock, Long categoryId, Category category) {
         this.name = name;
         this.price = price;
         this.stock = stock;
-        this.categoryId = categoryId;
+        //this.categoryId = categoryId;
+        this.category = category;
     }
 
     /**

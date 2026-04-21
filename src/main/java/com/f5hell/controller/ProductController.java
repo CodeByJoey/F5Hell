@@ -1,7 +1,10 @@
 package com.f5hell.controller;
 
 import com.f5hell.domain.dto.ProductRequest;
+import com.f5hell.domain.dto.ProductResponse;
+import com.f5hell.domain.entity.Category;
 import com.f5hell.domain.entity.Product;
+import com.f5hell.service.CategoryService;
 import com.f5hell.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +18,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/products")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
+
+    @ModelAttribute("categoryList")
+    public List<Category> categoryList() {
+        return categoryService.getList();
+    }
 
     @GetMapping("/create")
     public String createForm(Model model) {
@@ -53,6 +64,7 @@ public class ProductController {
     @GetMapping("/get/{id}")
     public String getList(@PathVariable("id") Long id, Model model) {
         Product product = productService.get(id);
+
         model.addAttribute("product", product);
         return "product/productDetail";
     }
@@ -60,7 +72,10 @@ public class ProductController {
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.get(id);
-        model.addAttribute("productForm", product);
+
+        ProductResponse productResponse = ProductResponse.from(product);
+
+        model.addAttribute("product", productResponse);
         return "product/updateForm";
     }
 
