@@ -43,7 +43,7 @@ public class DummyDataLoader implements CommandLineRunner {
                         .name("F5 상품 " + i)
                         .price(1000L + (i * 10)) // 가격도 다양하게
                         .stock(i % 100)        // 재고도 0~99 사이로
-                        .categoryId(targetCategory.getId())
+                        .category(targetCategory)
                         .create());
 
                 // 너무 큰 리스트는 메모리 부하가 올 수 있으니 100개 단위로 끊어서 저장

@@ -61,10 +61,11 @@ public class Product {
         return this.stock -= quantity;
     }
 
-    public Long update(ProductRequest request) {
+    public Long update(ProductRequest request, Category category) {
         this.name = request.getName();
         this.price = request.getPrice();
         this.stock = request.getStock();
+        this.category = category;
         return this.id;
     }
 }

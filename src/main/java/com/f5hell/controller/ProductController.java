@@ -65,7 +65,9 @@ public class ProductController {
     public String getList(@PathVariable("id") Long id, Model model) {
         Product product = productService.get(id);
 
-        model.addAttribute("product", product);
+        ProductResponse productResponse = ProductResponse.from(product);
+
+        model.addAttribute("product", productResponse);
         return "product/productDetail";
     }
 
@@ -76,16 +78,19 @@ public class ProductController {
         ProductResponse productResponse = ProductResponse.from(product);
 
         model.addAttribute("product", productResponse);
+        model.addAttribute("productId", id);
         return "product/updateForm";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id,
-                         @Valid @ModelAttribute("productForm") ProductRequest request,
+    public String update(@PathVariable("id") Long id, Model model,
+                         @Valid @ModelAttribute("product") ProductRequest request,
                          BindingResult result) {
         if(result.hasErrors()) {
+            model.addAttribute("productId", id);
             return "product/updateForm";
         }
+
         Long savedId = productService.update(id, request);
         return "redirect:/products/get/" + savedId;
     }

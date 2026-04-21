@@ -52,7 +52,9 @@ public class ProductService {
     @Transactional
     public Long update(Long id, ProductRequest request) {
         Product findProduct = productRepository.findById(id).orElse(null);
-        return findProduct.update(request);
+        Category category = categoryRepository.findById(request.getCategoryId()).orElse(null);
+
+        return findProduct.update(request, category);
     }
 
     @Transactional
