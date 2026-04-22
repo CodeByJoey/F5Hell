@@ -24,14 +24,18 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;  // 카테고리
+    private String uploadFileName; // 실제 첨부파일명
+    private String storeFileName; // 서버 첨부파일명
 
     @Builder(buildMethodName = "create")
-    private Product(String name, Long price, Integer stock, Long categoryId, Category category) {
+    private Product(String name, Long price, Integer stock, Long categoryId, Category category, String uploadFileName, String storeFileName) {
         this.name = name;
         this.price = price;
         this.stock = stock;
         //this.categoryId = categoryId;
         this.category = category;
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
     }
 
     /**

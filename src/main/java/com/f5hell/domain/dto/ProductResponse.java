@@ -13,6 +13,8 @@ public class ProductResponse {
     private Integer stock;
     private Long categoryId;
     private String categoryName;
+    private String uploadFileName;
+    private String storeFileName;
 
     public static ProductResponse from(Product product) {
         return new ProductResponse(
@@ -21,7 +23,9 @@ public class ProductResponse {
             product.getPrice(),
             product.getStock(),
             product.getCategory().getId(),
-            product.getCategory().getName()
+            product.getCategory().getName(),
+            product.getUploadFileName(),
+            product.getStoreFileName()
         );
     }
 }
